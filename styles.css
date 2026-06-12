@@ -352,8 +352,8 @@ body {
 
 /* ==================== GAME CONTAINER ==================== */
 #game-container {
-    width: 1000px;
-    height: 700px;
+    width: 1200px;
+    height: 800px;
     position: relative;
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
@@ -958,7 +958,7 @@ h2 {
 }
 
 /* ==================== RESPONSIVE ==================== */
-@media (max-width: 1040px) {
+@media (max-width: 1240px) {
     #game-container {
         width: 100vw;
         height: 100vh;

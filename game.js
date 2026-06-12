@@ -1,6 +1,6 @@
 // ==================== GAME CONSTANTS ====================
-const CANVAS_WIDTH = 1000;
-const CANVAS_HEIGHT = 700;
+const CANVAS_WIDTH = 1200;
+const CANVAS_HEIGHT = 800;
 const GRAVITY = 0.5;
 const JUMP_FORCE = -15;
 const MOVE_SPEED = 5.5;
