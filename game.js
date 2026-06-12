@@ -1,9 +1,9 @@
 // ==================== GAME CONSTANTS ====================
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 600;
-const GRAVITY = 0.6;
-const JUMP_FORCE = -13;
-const MOVE_SPEED = 5;
+const GRAVITY = 0.5;
+const JUMP_FORCE = -15;
+const MOVE_SPEED = 5.5;
 
 const RANKS = [
     { title: "Intern", color: "#a0aec0" },
@@ -197,11 +197,16 @@ function generateLevel() {
 
     // Generate platforms going upward
     let lastY = CANVAS_HEIGHT - 120;
+    let lastX = CANVAS_WIDTH / 2;
     for (let i = 0; i < numPlatforms; i++) {
-        const gap = 60 + Math.random() * 40;
+        const gap = 50 + Math.random() * 30;
         lastY -= gap;
-        const width = 80 + Math.random() * 100 - difficulty * 5;
-        const x = Math.random() * (CANVAS_WIDTH - width);
+        const width = 100 + Math.random() * 100 - difficulty * 5;
+        // Keep platforms horizontally reachable from the previous one
+        const maxHorizontalJump = 250;
+        let x = lastX + (Math.random() - 0.5) * maxHorizontalJump;
+        x = Math.max(0, Math.min(CANVAS_WIDTH - width, x));
+        lastX = x + width / 2;
 
         platforms.push({
             x: x,
