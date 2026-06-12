@@ -27,6 +27,53 @@ A platformer game where you climb from intern to CEO by jumping across platforms
 | ← → or A/D | Move left/right |
 | SPACE or W/↑ | Jump |
 
+## How to Play
+
+1. Click **"Start Internship"** on the title screen
+2. Jump across platforms to climb upward toward the **elevator (⬆)** at the top
+3. Collect powerups along the way for points and abilities
+4. Avoid obstacles — hitting one costs a life
+5. Reach the elevator to get **promoted** to the next rank
+6. Repeat through all floors until you become **CEO**
+
+## Rules
+
+- You start with **3 lives** (❤️❤️❤️)
+- Hitting an obstacle (📧📅🧑‍💼📊💼) removes 1 life
+- Falling off the bottom of the screen removes 1 life
+- Losing all lives ends the game
+- Collecting items quickly builds a **combo** (up to 5x score multiplier)
+- The combo resets if you take damage or stop collecting for too long
+
+### Powerups
+
+| Item | Effect |
+|------|--------|
+| ☕ Coffee | Temporary speed boost |
+| ⭐ Star Review | Temporary shield (blocks one hit) |
+| 📎 Paperclip | +25 points (× combo) |
+| 💡 Idea | +75 points (× combo) |
+
+### Obstacles
+
+| Item | Threat |
+|------|--------|
+| 📧 Email | Static hazard |
+| 📅 Meeting | Static hazard |
+| 🧑‍💼 Manager | Static hazard |
+| 📊 Report | Static hazard |
+| 💼 Extra Work | Static hazard |
+
+> On higher floors, obstacles start **moving** and platforms may **shift**, increasing difficulty.
+
+### Rank Progression
+
+```
+Intern → Junior Developer → Senior Developer → Team Lead → Manager → VP of Engineering → CEO
+```
+
+Each promotion takes you to a harder floor with more obstacles, moving platforms, and tighter jumps.
+
 ## Features
 
 - 6 selectable themes (Midnight, Cyberpunk, Forest, Ocean, Sunset, Monochrome)
