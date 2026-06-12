@@ -434,10 +434,13 @@ function update() {
         return;
     }
 
-    // Smooth camera follow
-    targetCameraY = -(player.y - CANVAS_HEIGHT * 0.6);
+    // Smooth camera follow (both up and down)
+    targetCameraY = -(player.y - CANVAS_HEIGHT * 0.5);
     if (targetCameraY > cameraY) {
         cameraY += (targetCameraY - cameraY) * 0.08;
+    } else {
+        // Follow player downward so they stay visible
+        cameraY += (targetCameraY - cameraY) * 0.12;
     }
     if (cameraY < 0) cameraY = 0;
 
