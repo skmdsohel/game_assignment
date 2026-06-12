@@ -38,7 +38,7 @@ A platformer game where you climb from intern to CEO by jumping across platforms
 
 ## Rules
 
-- You start with **3 lives** (❤️❤️❤️)
+- You start with **5 lives** (❤️❤️❤️❤️❤️)
 - Hitting an obstacle (📧📅🧑‍💼📊💼) removes 1 life
 - Falling off the bottom of the screen removes 1 life
 - Losing all lives ends the game

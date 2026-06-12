@@ -1,9 +1,10 @@
 // ==================== GAME CONSTANTS ====================
 const CANVAS_WIDTH = 1200;
 const CANVAS_HEIGHT = 800;
-const GRAVITY = 0.5;
-const JUMP_FORCE = -15;
-const MOVE_SPEED = 5.5;
+const GRAVITY = 0.45;
+const JUMP_FORCE = -16;
+const MOVE_SPEED = 6;
+const MAX_LIVES = 5;
 
 const RANKS = [
     { title: "Intern", color: "#a0aec0" },
@@ -138,7 +139,7 @@ function loadSavedTheme() {
 let canvas, ctx;
 let gameState = "start";
 let score = 0;
-let lives = 3;
+let lives = MAX_LIVES;
 let currentRank = 0;
 let currentFloor = 1;
 let player = null;
@@ -189,7 +190,7 @@ function init() {
 
 function startGame() {
     score = 0;
-    lives = 3;
+    lives = MAX_LIVES;
     currentRank = 0;
     currentFloor = 1;
     speedBoostTimer = 0;
@@ -222,7 +223,7 @@ function generateLevel() {
     levelComplete = false;
 
     const difficulty = currentRank;
-    const numPlatforms = 15 + difficulty * 3;
+    const numPlatforms = 10 + difficulty * 2;
 
     // Ground platform
     platforms.push({
@@ -252,11 +253,11 @@ function generateLevel() {
     let lastY = CANVAS_HEIGHT - 120;
     let lastX = CANVAS_WIDTH / 2;
     for (let i = 0; i < numPlatforms; i++) {
-        const gap = 50 + Math.random() * 30;
+        const gap = 40 + Math.random() * 25;
         lastY -= gap;
-        const width = 100 + Math.random() * 100 - difficulty * 5;
+        const width = 130 + Math.random() * 80 - difficulty * 3;
         // Keep platforms horizontally reachable from the previous one
-        const maxHorizontalJump = 250;
+        const maxHorizontalJump = 200;
         let x;
         // Last few platforms guide toward center for elevator access
         if (i >= numPlatforms - 2) {
@@ -270,14 +271,14 @@ function generateLevel() {
         platforms.push({
             x: x,
             y: lastY,
-            width: Math.max(width, 50),
+            width: Math.max(width, 80),
             height: 15,
             type: "normal",
-            moving: difficulty > 1 && Math.random() < 0.2 ? { speed: 1 + Math.random(), dir: 1, range: 100, startX: x } : null
+            moving: difficulty > 2 && Math.random() < 0.15 ? { speed: 0.8 + Math.random() * 0.5, dir: 1, range: 70, startX: x } : null
         });
 
-        // Add obstacles on some platforms
-        if (i > 2 && Math.random() < 0.3 + difficulty * 0.05) {
+        // Add obstacles on some platforms (much rarer)
+        if (i > 3 && Math.random() < 0.15 + difficulty * 0.03) {
             const obsType = OBSTACLE_TYPES[Math.floor(Math.random() * Math.min(OBSTACLE_TYPES.length, 2 + difficulty))];
             obstacles.push({
                 x: x + width / 2 - obsType.width / 2,
@@ -285,12 +286,12 @@ function generateLevel() {
                 width: obsType.width,
                 height: obsType.height,
                 type: obsType,
-                moving: difficulty > 2 && Math.random() < 0.3 ? { speed: 1.5, dir: 1, range: 60, startX: x + width / 2 - obsType.width / 2 } : null
+                moving: difficulty > 3 && Math.random() < 0.2 ? { speed: 1.2, dir: 1, range: 50, startX: x + width / 2 - obsType.width / 2 } : null
             });
         }
 
-        // Add collectibles
-        if (Math.random() < 0.4) {
+        // Add collectibles (more frequent)
+        if (Math.random() < 0.55) {
             const colType = COLLECTIBLE_TYPES[Math.floor(Math.random() * COLLECTIBLE_TYPES.length)];
             collectibles.push({
                 x: x + width / 2 - 12,
@@ -304,22 +305,22 @@ function generateLevel() {
         }
     }
 
-    // Elevator platform at the same level as last step, centered
-    const elevPlatY = lastY;
+    // Elevator platform spans full width — guaranteed reachable from any last platform
+    const elevPlatY = lastY - 50;
     platforms.push({
-        x: CANVAS_WIDTH / 2 - 120,
+        x: 0,
         y: elevPlatY,
-        width: 240,
-        height: 15,
+        width: CANVAS_WIDTH,
+        height: 18,
         type: "elevator-platform"
     });
 
-    // Elevator sits right on top of the platform — player just walks into it
+    // Elevator door at center (visual goal marker)
     elevator = {
-        x: CANVAS_WIDTH / 2 - 35,
-        y: elevPlatY - 45,
-        width: 70,
-        height: 47
+        x: CANVAS_WIDTH / 2 - 40,
+        y: elevPlatY - 55,
+        width: 80,
+        height: 70
     };
 
     updateHUD();
@@ -478,8 +479,20 @@ function update() {
         }
     }
 
-    // Check elevator
-    if (elevator && checkCollision(player, elevator)) {
+    // Check elevator — win triggered by touching door OR standing on elevator platform
+    let onElevatorFloor = false;
+    if (player.onGround) {
+        for (let plat of platforms) {
+            if (plat.type === "elevator-platform" &&
+                player.x + player.width > plat.x &&
+                player.x < plat.x + plat.width &&
+                Math.abs(player.y + player.height - plat.y) < 5) {
+                onElevatorFloor = true;
+                break;
+            }
+        }
+    }
+    if (onElevatorFloor || (elevator && checkCollision(player, elevator))) {
         levelComplete = true;
         gameState = "promotion";
         currentRank++;
@@ -924,7 +937,7 @@ function updateHUD() {
     // Update hearts
     const livesContainer = document.getElementById("lives-display");
     let heartsHTML = '';
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < MAX_LIVES; i++) {
         heartsHTML += `<span class="heart ${i < lives ? 'active' : ''}">♥</span>`;
     }
     livesContainer.innerHTML = heartsHTML;
