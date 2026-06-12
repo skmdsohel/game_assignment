@@ -1,6 +1,6 @@
 // ==================== GAME CONSTANTS ====================
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 600;
+const CANVAS_WIDTH = 1000;
+const CANVAS_HEIGHT = 700;
 const GRAVITY = 0.5;
 const JUMP_FORCE = -15;
 const MOVE_SPEED = 5.5;
@@ -245,22 +245,23 @@ function generateLevel() {
         }
     }
 
-    // Place elevator at top
-    elevator = {
-        x: CANVAS_WIDTH / 2 - 30,
-        y: lastY - 100,
-        width: 60,
-        height: 70
-    };
-
     // Platform near elevator
+    const elevPlatY = lastY - 70;
     platforms.push({
-        x: CANVAS_WIDTH / 2 - 60,
-        y: lastY - 30,
-        width: 120,
+        x: CANVAS_WIDTH / 2 - 80,
+        y: elevPlatY,
+        width: 160,
         height: 15,
         type: "elevator-platform"
     });
+
+    // Place elevator on the platform (player walks into it)
+    elevator = {
+        x: CANVAS_WIDTH / 2 - 30,
+        y: elevPlatY - 70,
+        width: 60,
+        height: 72
+    };
 
     updateHUD();
 }
