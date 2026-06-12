@@ -257,7 +257,13 @@ function generateLevel() {
         const width = 100 + Math.random() * 100 - difficulty * 5;
         // Keep platforms horizontally reachable from the previous one
         const maxHorizontalJump = 250;
-        let x = lastX + (Math.random() - 0.5) * maxHorizontalJump;
+        let x;
+        // Last few platforms guide toward center for elevator access
+        if (i >= numPlatforms - 2) {
+            x = CANVAS_WIDTH / 2 - width / 2 + (Math.random() - 0.5) * 80;
+        } else {
+            x = lastX + (Math.random() - 0.5) * maxHorizontalJump;
+        }
         x = Math.max(0, Math.min(CANVAS_WIDTH - width, x));
         lastX = x + width / 2;
 
@@ -298,22 +304,22 @@ function generateLevel() {
         }
     }
 
-    // Elevator platform directly above last platform — very close
-    const elevPlatY = lastY - 30;
+    // Elevator platform at the same level as last step, centered
+    const elevPlatY = lastY;
     platforms.push({
-        x: CANVAS_WIDTH / 2 - 100,
+        x: CANVAS_WIDTH / 2 - 120,
         y: elevPlatY,
-        width: 200,
+        width: 240,
         height: 15,
         type: "elevator-platform"
     });
 
-    // Place elevator sitting on the platform (player walks into it)
+    // Elevator sits right on top of the platform — player just walks into it
     elevator = {
         x: CANVAS_WIDTH / 2 - 35,
-        y: elevPlatY - 48,
+        y: elevPlatY - 45,
         width: 70,
-        height: 50
+        height: 47
     };
 
     updateHUD();
