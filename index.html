@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Last Intern: Climb the Corporate Ladder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="start-screen" class="screen">
+            <h1>The Last Intern</h1>
+            <h2>Climb the Corporate Ladder</h2>
+            <div class="start-art">🧑‍💼</div>
+            <p class="instructions">
+                Use <span class="key">←</span> <span class="key">→</span> to move, <span class="key">SPACE</span> to jump<br>
+                Collect ☕ for speed boost, 📎 for points<br>
+                Avoid 📧 emails, 📅 meetings, and 🧑‍💼 middle managers<br>
+                Reach the elevator to get promoted!
+            </p>
+            <button id="start-btn" onclick="startGame()">Start Internship</button>
+        </div>
+
+        <div id="game-screen" class="screen hidden">
+            <div id="hud">
+                <div id="hud-left">
+                    <span id="level-display">Level: Intern</span>
+                    <span id="floor-display">Floor 1</span>
+                </div>
+                <div id="hud-right">
+                    <span id="score-display">Score: 0</span>
+                    <span id="lives-display">❤️❤️❤️</span>
+                </div>
+            </div>
+            <canvas id="game-canvas"></canvas>
+        </div>
+
+        <div id="gameover-screen" class="screen hidden">
+            <h1 id="gameover-title">Game Over</h1>
+            <p id="gameover-message">You've been let go...</p>
+            <p id="final-score">Final Score: 0</p>
+            <p id="final-rank">Highest Rank: Intern</p>
+            <button onclick="startGame()">Try Again</button>
+        </div>
+
+        <div id="win-screen" class="screen hidden">
+            <h1>🎉 Congratulations! 🎉</h1>
+            <h2>You became the CEO!</h2>
+            <div class="win-art">👔</div>
+            <p id="win-score">Final Score: 0</p>
+            <p>You climbed from intern to the top of the corporate ladder!</p>
+            <button onclick="startGame()">Play Again</button>
+        </div>
+
+        <div id="promotion-screen" class="screen hidden">
+            <h1>⬆️ PROMOTED! ⬆️</h1>
+            <h2 id="promotion-text">You are now a Junior Developer!</h2>
+            <div id="promotion-art">📈</div>
+            <button onclick="continueAfterPromotion()">Continue</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
