@@ -298,22 +298,35 @@ function generateLevel() {
         }
     }
 
-    // Platform near elevator
-    const elevPlatY = lastY - 45;
+    // Add a stepping platform toward center to bridge to elevator
+    const bridgeY = lastY - 55;
+    const bridgeX = CANVAS_WIDTH / 2 - 60 + (lastX > CANVAS_WIDTH / 2 ? -40 : 40);
     platforms.push({
-        x: CANVAS_WIDTH / 2 - 80,
+        x: Math.max(0, Math.min(CANVAS_WIDTH - 130, bridgeX)),
+        y: bridgeY,
+        width: 130,
+        height: 15,
+        type: "normal",
+        moving: null
+    });
+    lastY = bridgeY;
+
+    // Platform near elevator — placed close above the last platform so player can reach
+    const elevPlatY = lastY - 55;
+    platforms.push({
+        x: CANVAS_WIDTH / 2 - 90,
         y: elevPlatY,
-        width: 160,
+        width: 180,
         height: 15,
         type: "elevator-platform"
     });
 
-    // Place elevator on the platform (player walks into it)
+    // Place elevator sitting on the platform (player walks into it)
     elevator = {
-        x: CANVAS_WIDTH / 2 - 30,
-        y: elevPlatY - 55,
-        width: 60,
-        height: 57
+        x: CANVAS_WIDTH / 2 - 35,
+        y: elevPlatY - 50,
+        width: 70,
+        height: 52
     };
 
     updateHUD();
