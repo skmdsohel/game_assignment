@@ -30,6 +30,59 @@ const COLLECTIBLE_TYPES = [
     { emoji: "💡", name: "idea", points: 75, effect: "points" }
 ];
 
+// ==================== LEARNING TIPS ====================
+const PROMOTION_TIPS = {
+    1: [ // Promoted to Junior Developer
+        "Version control (Git) is essential — commit early and commit often. It saves you when things break.",
+        "Code readability matters more than cleverness. Your future self will thank you for clear variable names.",
+        "Don't be afraid to ask questions. Senior devs expect it and appreciate curiosity over pretending to know.",
+        "Learn to use your IDE shortcuts. They can double your productivity overnight."
+    ],
+    2: [ // Promoted to Senior Developer
+        "Writing tests isn't extra work — it's insurance. A good test suite lets you refactor with confidence.",
+        "The DRY principle (Don't Repeat Yourself) saves maintenance headaches. Abstract when you see patterns.",
+        "Code reviews aren't criticism — they're learning opportunities. Review others' code to grow faster.",
+        "Technical debt is real. Schedule time to refactor, or it compounds like interest on a loan."
+    ],
+    3: [ // Promoted to Team Lead
+        "Leadership is about enabling others, not doing everything yourself. Delegate and trust your team.",
+        "Clear communication prevents more bugs than any linter. Document decisions and share context.",
+        "A 10-minute standup that stays focused is worth more than a 1-hour meeting with no agenda.",
+        "Psychological safety on a team leads to more innovation. People need to feel safe to take risks."
+    ],
+    4: [ // Promoted to Manager
+        "The best managers remove blockers instead of adding process. Ask: 'What's slowing you down?'",
+        "1-on-1 meetings aren't status updates — they're for career growth, feedback, and building trust.",
+        "Hire for potential and culture-add, not just current skills. Skills can be taught; mindset is harder.",
+        "Data-driven decisions beat opinions. Measure what matters, but don't measure everything."
+    ],
+    5: [ // Promoted to VP
+        "Strategy is about saying no to good ideas so you can focus on great ones. Prioritize ruthlessly.",
+        "Cross-functional collaboration multiplies impact. Break down silos between teams.",
+        "Build systems that scale without you. If you're the bottleneck, you're not leading — you're blocking.",
+        "Culture is what happens when no one is watching. Model the behavior you want to see."
+    ],
+    6: [ // Promoted to CEO
+        "Vision without execution is hallucination. Great leaders balance inspiration with operational rigor.",
+        "The best companies solve real problems for real people. Stay close to your customers.",
+        "Continuous learning is the only sustainable competitive advantage — for individuals and organizations.",
+        "Success is never final. Stay humble, stay hungry, and always be willing to reinvent yourself."
+    ]
+};
+
+const GENERAL_TIPS = [
+    "The average person spends 5 years of their life waiting in lines. Use that time to learn something new!",
+    "The first computer programmer was Ada Lovelace, who wrote algorithms in the 1840s — before computers existed.",
+    "Rubber duck debugging works: explaining your code to an inanimate object helps you find bugs.",
+    "The term 'bug' came from an actual moth found in a Harvard computer in 1947.",
+    "Studies show taking breaks improves problem-solving. The Pomodoro technique: 25 min work, 5 min rest.",
+    "Open source powers 96% of the world's top web servers. Contributing to OSS is a great way to learn.",
+    "The most in-demand soft skill in tech is communication, not coding speed.",
+    "Imposter syndrome affects 70% of people. Feeling like a fraud? You're in good company.",
+    "The best time to start learning something new was yesterday. The second best time is now.",
+    "Networking isn't about collecting contacts — it's about planting seeds for mutual growth."
+];
+
 // ==================== THEME SYSTEM ====================
 let currentTheme = "midnight";
 
@@ -246,7 +299,7 @@ function generateLevel() {
     }
 
     // Platform near elevator
-    const elevPlatY = lastY - 70;
+    const elevPlatY = lastY - 45;
     platforms.push({
         x: CANVAS_WIDTH / 2 - 80,
         y: elevPlatY,
@@ -258,9 +311,9 @@ function generateLevel() {
     // Place elevator on the platform (player walks into it)
     elevator = {
         x: CANVAS_WIDTH / 2 - 30,
-        y: elevPlatY - 70,
+        y: elevPlatY - 55,
         width: 60,
-        height: 72
+        height: 57
     };
 
     updateHUD();
@@ -888,6 +941,10 @@ function showGameOverScreen() {
         "Your Slack has been archived..."
     ];
     document.getElementById("gameover-message").textContent = messages[Math.floor(Math.random() * messages.length)];
+
+    // Show a general learning tip on game over
+    const tip = GENERAL_TIPS[Math.floor(Math.random() * GENERAL_TIPS.length)];
+    document.getElementById("gameover-tip").textContent = tip;
 }
 
 function showPromotionScreen() {
@@ -897,6 +954,13 @@ function showPromotionScreen() {
 
     const arts = ["📈", "🏆", "💰", "🎯", "🚀", "👑"];
     document.getElementById("promotion-art").textContent = arts[Math.min(currentRank - 1, arts.length - 1)];
+
+    // Show learning tip for this rank
+    const tips = PROMOTION_TIPS[currentRank];
+    if (tips) {
+        const tip = tips[Math.floor(Math.random() * tips.length)];
+        document.getElementById("learning-tip").textContent = tip;
+    }
 
     // Progress bar
     const progress = (currentRank / (RANKS.length - 1)) * 100;
