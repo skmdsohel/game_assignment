@@ -217,8 +217,58 @@
                     </div>
                     <div class="promo-labels" id="promo-labels"></div>
                 </div>
+                <button class="btn-primary" onclick="startQuiz()">
+                    <span class="btn-text">Take Knowledge Quiz</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="quiz-screen" class="screen hidden">
+            <div class="screen-content quiz-content">
+                <div class="quiz-header">
+                    <span class="badge">BIOTECH QUIZ</span>
+                    <div class="quiz-progress-text">
+                        Question <span id="quiz-current">1</span> of <span id="quiz-total">5</span>
+                    </div>
+                </div>
+                <div class="quiz-progress-bar">
+                    <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+                </div>
+                <div class="quiz-question-card">
+                    <h2 id="quiz-question" class="quiz-question-text">Question text</h2>
+                    <div id="quiz-options" class="quiz-options"></div>
+                    <div id="quiz-feedback" class="quiz-feedback hidden">
+                        <p id="quiz-feedback-text"></p>
+                    </div>
+                </div>
+                <div class="quiz-score-display">
+                    Score: <span id="quiz-score">0</span> / <span id="quiz-max">5</span>
+                </div>
+                <button id="quiz-next-btn" class="btn-primary hidden" onclick="nextQuizQuestion()">
+                    <span class="btn-text">Next Question</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="quiz-result-screen" class="screen hidden">
+            <div class="screen-content">
+                <div id="quiz-result-icon" class="promo-icon">🎓</div>
+                <h1 id="quiz-result-title">Quiz Complete!</h1>
+                <p id="quiz-result-message" class="screen-subtitle">Great job learning about biotechnology!</p>
+                <div class="stats-card">
+                    <div class="stat-row">
+                        <span class="stat-label">Quiz Score</span>
+                        <span class="stat-value accent" id="quiz-result-score">5 / 5</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Bonus Points</span>
+                        <span class="stat-value" id="quiz-bonus">+0</span>
+                    </div>
+                </div>
                 <button class="btn-primary" onclick="continueAfterPromotion()">
-                    <span class="btn-text">Continue</span>
+                    <span class="btn-text">Continue Climbing</span>
                     <span class="btn-icon">→</span>
                 </button>
             </div>

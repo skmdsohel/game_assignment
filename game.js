@@ -996,6 +996,340 @@ function showWinScreen() {
     document.getElementById("win-score").textContent = score.toLocaleString();
 }
 
+// ==================== BIOTECH QUIZ ====================
+const BIOTECH_QUIZ = {
+    1: [ // After Intern → Junior Developer
+        {
+            q: "What does DNA stand for?",
+            options: ["Deoxyribonucleic Acid", "Dinitrogen Acid", "Dual Nucleic Arrangement", "Direct Nuclear Assembly"],
+            correct: 0,
+            explanation: "DNA (Deoxyribonucleic Acid) carries the genetic instructions for all living organisms."
+        },
+        {
+            q: "How many chromosomes do humans typically have?",
+            options: ["23", "46", "48", "92"],
+            correct: 1,
+            explanation: "Humans have 46 chromosomes arranged in 23 pairs — one set from each parent."
+        },
+        {
+            q: "Which scientist is known for discovering penicillin?",
+            options: ["Louis Pasteur", "Charles Darwin", "Alexander Fleming", "Gregor Mendel"],
+            correct: 2,
+            explanation: "Alexander Fleming discovered penicillin in 1928, revolutionizing modern medicine."
+        },
+        {
+            q: "What is the basic structural unit of all living organisms?",
+            options: ["Atom", "Cell", "Molecule", "Tissue"],
+            correct: 1,
+            explanation: "The cell is the smallest unit of life — all organisms are composed of one or more cells."
+        },
+        {
+            q: "What process do plants use to make food from sunlight?",
+            options: ["Respiration", "Fermentation", "Photosynthesis", "Digestion"],
+            correct: 2,
+            explanation: "Photosynthesis converts sunlight, water, and CO2 into glucose and oxygen."
+        }
+    ],
+    2: [ // After Junior → Senior Developer
+        {
+            q: "What does PCR stand for in biotechnology?",
+            options: ["Protein Cell Regeneration", "Polymerase Chain Reaction", "Plasmid Cloning Replication", "Primary Cellular Response"],
+            correct: 1,
+            explanation: "PCR (Polymerase Chain Reaction) amplifies DNA sequences and is fundamental to modern genetics."
+        },
+        {
+            q: "Which molecule is known as the 'energy currency' of the cell?",
+            options: ["DNA", "ATP", "RNA", "Glucose"],
+            correct: 1,
+            explanation: "ATP (Adenosine Triphosphate) stores and releases energy for cellular processes."
+        },
+        {
+            q: "What is CRISPR primarily used for?",
+            options: ["Cell imaging", "Gene editing", "Protein synthesis", "Tissue culture"],
+            correct: 1,
+            explanation: "CRISPR-Cas9 is a revolutionary gene-editing tool that allows precise modification of DNA."
+        },
+        {
+            q: "What type of molecule is insulin?",
+            options: ["Lipid", "Carbohydrate", "Protein", "Nucleic acid"],
+            correct: 2,
+            explanation: "Insulin is a protein hormone that regulates blood glucose levels."
+        },
+        {
+            q: "Which organelle is known as the 'powerhouse' of the cell?",
+            options: ["Nucleus", "Ribosome", "Mitochondria", "Golgi apparatus"],
+            correct: 2,
+            explanation: "Mitochondria generate most of the cell's energy through cellular respiration."
+        }
+    ],
+    3: [ // After Senior → Team Lead
+        {
+            q: "What is a genome?",
+            options: ["A single gene", "All genetic material in an organism", "A type of protein", "A cellular structure"],
+            correct: 1,
+            explanation: "A genome is the complete set of DNA, including all genes, in an organism."
+        },
+        {
+            q: "Which technique is used to separate DNA fragments by size?",
+            options: ["Chromatography", "Gel electrophoresis", "Centrifugation", "Spectroscopy"],
+            correct: 1,
+            explanation: "Gel electrophoresis uses an electric field to separate DNA fragments by size."
+        },
+        {
+            q: "What is a vaccine made of?",
+            options: ["Pure antibodies", "Weakened or inactive pathogens", "Antibiotics", "Vitamins"],
+            correct: 1,
+            explanation: "Vaccines contain weakened, killed, or pieces of pathogens to trigger immunity without disease."
+        },
+        {
+            q: "What does mRNA do in a cell?",
+            options: ["Stores genetic info", "Carries instructions for protein synthesis", "Destroys viruses", "Produces ATP"],
+            correct: 1,
+            explanation: "Messenger RNA carries genetic instructions from DNA to ribosomes for protein synthesis."
+        },
+        {
+            q: "Stem cells are special because they can:",
+            options: ["Move freely", "Live forever", "Differentiate into other cell types", "Photosynthesize"],
+            correct: 2,
+            explanation: "Stem cells can develop into many different specialized cell types, making them valuable for regenerative medicine."
+        }
+    ],
+    4: [ // After Team Lead → Manager
+        {
+            q: "What is a recombinant DNA?",
+            options: ["DNA from a single source", "DNA combined from different organisms", "Damaged DNA", "Synthetic DNA only"],
+            correct: 1,
+            explanation: "Recombinant DNA is created by combining DNA sequences from different organisms — the basis of genetic engineering."
+        },
+        {
+            q: "What is the Human Genome Project?",
+            options: ["A cloning experiment", "Mapping all human genes", "A drug development study", "A vaccine trial"],
+            correct: 1,
+            explanation: "Completed in 2003, the Human Genome Project mapped all ~20,000 human genes."
+        },
+        {
+            q: "What does GMO stand for?",
+            options: ["Generic Modified Organism", "Genetically Modified Organism", "Genome Mapping Operation", "Gene Modulating Output"],
+            correct: 1,
+            explanation: "GMO (Genetically Modified Organism) refers to organisms whose DNA has been altered using biotechnology."
+        },
+        {
+            q: "What are antibodies?",
+            options: ["Bacteria killers", "Proteins that fight specific antigens", "Types of DNA", "Energy molecules"],
+            correct: 1,
+            explanation: "Antibodies are Y-shaped proteins produced by the immune system to identify and neutralize foreign objects."
+        },
+        {
+            q: "What is bioinformatics?",
+            options: ["Studying animal behavior", "Using computers to analyze biological data", "Growing tissues in labs", "Creating new species"],
+            correct: 1,
+            explanation: "Bioinformatics applies computer science and statistics to analyze biological data like DNA sequences."
+        }
+    ],
+    5: [ // After Manager → VP
+        {
+            q: "What is gene therapy?",
+            options: ["Talking to your genes", "Treating disease by modifying genes", "A type of exercise", "Genetic counseling"],
+            correct: 1,
+            explanation: "Gene therapy treats diseases by inserting, altering, or removing genes within a patient's cells."
+        },
+        {
+            q: "What is monoclonal antibody therapy used for?",
+            options: ["Just cancer", "Just infections", "Cancer, autoimmune diseases, and viral infections", "Only allergies"],
+            correct: 2,
+            explanation: "Monoclonal antibodies are engineered proteins used to treat many conditions including cancer, COVID-19, and autoimmune diseases."
+        },
+        {
+            q: "What is synthetic biology?",
+            options: ["Making fake organisms", "Designing biological systems for new purposes", "Plastic surgery", "Robot engineering"],
+            correct: 1,
+            explanation: "Synthetic biology designs and constructs new biological parts, devices, and systems."
+        },
+        {
+            q: "Which is NOT a common biotech application?",
+            options: ["Disease diagnosis", "Crop improvement", "Building skyscrapers", "Biofuel production"],
+            correct: 2,
+            explanation: "Biotech is widely used in medicine, agriculture, and energy — but not construction!"
+        },
+        {
+            q: "What is personalized medicine?",
+            options: ["Same drugs for everyone", "Medicine tailored to individual genetics", "Home remedies", "Mental health therapy"],
+            correct: 1,
+            explanation: "Personalized medicine uses genetic information to customize treatments for individual patients."
+        }
+    ],
+    6: [ // After VP → CEO
+        {
+            q: "What is mRNA vaccine technology famous for?",
+            options: ["Treating cancer", "Fighting COVID-19", "Curing diabetes", "Anti-aging"],
+            correct: 1,
+            explanation: "mRNA vaccines (like Pfizer and Moderna) revolutionized vaccine development during the COVID-19 pandemic."
+        },
+        {
+            q: "What is bioprinting?",
+            options: ["Printing biology textbooks", "3D printing of living tissues", "DNA fingerprinting", "Photographing cells"],
+            correct: 1,
+            explanation: "Bioprinting uses 3D printers with bio-inks to create tissues and potentially organs for transplantation."
+        },
+        {
+            q: "What does 'in vitro' mean?",
+            options: ["In a living organism", "In glass / outside the body", "In nature", "In computers"],
+            correct: 1,
+            explanation: "'In vitro' is Latin for 'in glass' — experiments done in test tubes or petri dishes outside living organisms."
+        },
+        {
+            q: "What is the gut microbiome?",
+            options: ["A digestive organ", "Microorganisms living in your intestines", "A type of vitamin", "Stomach acid"],
+            correct: 1,
+            explanation: "The gut microbiome consists of trillions of microorganisms that play vital roles in digestion, immunity, and health."
+        },
+        {
+            q: "What's the future potential of biotechnology?",
+            options: ["Only making food", "Curing diseases, sustainability, and longevity", "Just lab experiments", "Replacing all jobs"],
+            correct: 1,
+            explanation: "Biotech holds promise for curing diseases, sustainable agriculture, climate solutions, and extending healthy human lifespan."
+        }
+    ]
+};
+
+let quizState = {
+    questions: [],
+    currentIndex: 0,
+    score: 0,
+    answered: false
+};
+
+function startQuiz() {
+    const questions = BIOTECH_QUIZ[currentRank];
+    if (!questions) {
+        // No quiz for this rank, skip directly
+        continueAfterPromotion();
+        return;
+    }
+
+    quizState = {
+        questions: questions,
+        currentIndex: 0,
+        score: 0,
+        answered: false
+    };
+
+    hideAllScreens();
+    document.getElementById("quiz-screen").classList.remove("hidden");
+    document.getElementById("quiz-total").textContent = questions.length;
+    document.getElementById("quiz-max").textContent = questions.length;
+    renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+    const q = quizState.questions[quizState.currentIndex];
+    quizState.answered = false;
+
+    document.getElementById("quiz-current").textContent = quizState.currentIndex + 1;
+    document.getElementById("quiz-score").textContent = quizState.score;
+    document.getElementById("quiz-question").textContent = q.q;
+
+    const progress = ((quizState.currentIndex) / quizState.questions.length) * 100;
+    document.getElementById("quiz-progress-fill").style.width = `${progress}%`;
+
+    const optionsContainer = document.getElementById("quiz-options");
+    optionsContainer.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
+    q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'quiz-option';
+        btn.innerHTML = `<span class="quiz-option-letter">${letters[i]}</span><span>${opt}</span>`;
+        btn.onclick = () => selectAnswer(i);
+        optionsContainer.appendChild(btn);
+    });
+
+    document.getElementById("quiz-feedback").classList.add("hidden");
+    document.getElementById("quiz-next-btn").classList.add("hidden");
+}
+
+function selectAnswer(selectedIndex) {
+    if (quizState.answered) return;
+    quizState.answered = true;
+
+    const q = quizState.questions[quizState.currentIndex];
+    const buttons = document.querySelectorAll('.quiz-option');
+
+    buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === q.correct) {
+            btn.classList.add('correct');
+        } else if (i === selectedIndex && i !== q.correct) {
+            btn.classList.add('incorrect');
+        }
+    });
+
+    if (selectedIndex === q.correct) {
+        quizState.score++;
+        document.getElementById("quiz-score").textContent = quizState.score;
+    }
+
+    // Show explanation
+    const feedback = document.getElementById("quiz-feedback");
+    feedback.classList.remove("hidden");
+    const prefix = selectedIndex === q.correct ? "✓ Correct! " : "✗ Not quite. ";
+    document.getElementById("quiz-feedback-text").textContent = prefix + q.explanation;
+
+    // Show next button
+    const nextBtn = document.getElementById("quiz-next-btn");
+    nextBtn.classList.remove("hidden");
+    const isLast = quizState.currentIndex === quizState.questions.length - 1;
+    nextBtn.querySelector('.btn-text').textContent = isLast ? "See Results" : "Next Question";
+}
+
+function nextQuizQuestion() {
+    quizState.currentIndex++;
+    if (quizState.currentIndex >= quizState.questions.length) {
+        showQuizResult();
+    } else {
+        renderQuizQuestion();
+    }
+}
+
+function showQuizResult() {
+    hideAllScreens();
+    document.getElementById("quiz-result-screen").classList.remove("hidden");
+
+    const total = quizState.questions.length;
+    const percent = (quizState.score / total) * 100;
+    const bonus = quizState.score * 100;
+    score += bonus;
+
+    document.getElementById("quiz-result-score").textContent = `${quizState.score} / ${total}`;
+    document.getElementById("quiz-bonus").textContent = `+${bonus}`;
+
+    let title, message, icon;
+    if (percent === 100) {
+        title = "Perfect Score!";
+        message = "You're a biotech genius! Knowledge is power.";
+        icon = "🏆";
+    } else if (percent >= 80) {
+        title = "Excellent!";
+        message = "Great knowledge of biotechnology!";
+        icon = "🎓";
+    } else if (percent >= 60) {
+        title = "Good Job!";
+        message = "Solid effort — keep learning!";
+        icon = "📚";
+    } else if (percent >= 40) {
+        title = "Nice Try!";
+        message = "Every question is a learning opportunity.";
+        icon = "💡";
+    } else {
+        title = "Keep Learning!";
+        message = "Biotech is fascinating — review and try again next time!";
+        icon = "🔬";
+    }
+
+    document.getElementById("quiz-result-title").textContent = title;
+    document.getElementById("quiz-result-message").textContent = message;
+    document.getElementById("quiz-result-icon").textContent = icon;
+}
+
 function continueAfterPromotion() {
     hideAllScreens();
     document.getElementById("game-screen").classList.remove("hidden");
